@@ -1,0 +1,27 @@
+﻿name: SCA - npm audit
+
+on:
+  push:
+  schedule:
+    - cron: '0 6 * * 1'
+
+jobs:
+  dependency-scan:
+    name: Dependency Scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run npm audit (SCA)
+        run: |
+          echo "Running Software Composition Analysis..."
+          npm audit --audit-level=high
